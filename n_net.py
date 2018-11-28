@@ -39,8 +39,11 @@ plt.plot(x,y,label = sigmoid)
 
 plt.show()
 #print(x,y)
+"""
 
 
+"""
+ニューラルネットワークの計算
 #行列を使うと複数の罫線がいっぺんにできるぞ。便利！
 # A = w11 * x1 + w12 * x2 + b を全てに対しておこなっいる
 #第一層
@@ -60,7 +63,7 @@ A2 =np.dot(Z1,w2) + b2
 Z2 = sigmoid(A2)
 """
 
-#関数にすると
+#上のコメントアウト部を関数にすると
 def init_net():
 	network = {}
 	network["W1"] = np.array([[0.5,0.3,0.1],[0.5,0.7,-0.9]])
