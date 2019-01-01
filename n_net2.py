@@ -67,7 +67,7 @@ def test_func(x):
 #勾配　渡した関数の偏微分をすべてやってベクトルとして返してくれる
 
 ##### 勾配の刺す先は関数の値を一番小さくしてくれる場所
-def num_grid(f,x):
+def num_grad(f,x):
 	h = 1e-4
 	grid = np.zeros_like(x)
 	
@@ -90,8 +90,8 @@ def num_grid(f,x):
 def grid_descent(f, init_x, lr= 0.01,step_num =100):
 	x = init_x
 
-	for i in range(step_num):
-		grad = num_grid(f,x)
+	for _ in range(step_num):
+		grad = num_grad(f,x)
 		x -= lr * grad
 
 	return x
@@ -135,10 +135,10 @@ class Tow_Layer_net:
 		loss_w = lambda W :self.loss(x,t)
 
 		grad = {}
-		grad["W1"] = num_grid(loss_w,self.para["W1"])
-		grad["W2"] = num_grid(loss_w,self.para["W2"])
-		grad["B1"] = num_grid(loss_w,self.para["B1"])
-		grad["B2"] = num_grid(loss_w,self.para["B2"])
+		grad["W1"] = num_grad(loss_w,self.para["W1"])
+		grad["W2"] = num_grad(loss_w,self.para["W2"])
+		grad["B1"] = num_grad(loss_w,self.para["B1"])
+		grad["B2"] = num_grad(loss_w,self.para["B2"])
 
 		return grad
 
