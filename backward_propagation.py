@@ -12,6 +12,14 @@ import n_net
 図
 
 """
+"""
+各ノードのルール
+1,返り値は一つに統一
+2,forwordの引数は一つにする
+3,重みやバイアスは初期設定ですます
+
+"""
+
 class Mul_layer:
     def __init__(self):
         self.x = None
@@ -46,7 +54,7 @@ class Add_layer:
         dx = dout * 1
         dy = dout * 1
 
-        return dx , dy 
+        return dx  
 
 class Relu:
     def __init__(self):
@@ -81,17 +89,16 @@ class sigmoid:
         return dx
 
 class Affine:
-    def __init__(self):
+    def __init__(self,w,b):
         self.x = None
-        self.w = None
-        self.b = None
+        self.w = w
+        self.b = b
 
-    def forword(self,X,W,B):
+    def forword(self,X):
         self.x  =  X
-        self.w = W
-        self.b = B
+        
 
-        out  =  np.dot(X,W) + B
+        out  =  np.dot(X,self.w) + self.b
         return out
 
     def backword(self,dout):
@@ -104,9 +111,9 @@ class Affine:
         dx = np.dot(dout,self.w.T)
         dw = np.dot(self.x.T,dout)
 
-        return dx,dw,db
+        return dx
 
-class softmaxwith:
+class softmaxwithLoss:
     def __init__(self):
         self.x = None
         self.t = None
@@ -117,6 +124,8 @@ class softmaxwith:
         self.t = t
         self.y = n_net.soft_max(x)
         self.loss = n_net2.cross_entropy_error(self.y,t)
+
+        return self.y,self.loss
 
     def backword(self, dout= 1):
         batch_size  = self.t.shape[0]
