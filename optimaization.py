@@ -31,3 +31,22 @@ class momentum:
 
             for kye in parms.kye():
                 self.v[kye] = self.momentum
+                parms[kye] += self.v[key]
+
+#学習率を調整する鳳凰、 最初のうちは学習率を大きく進むにつれて小さくしていく計算法
+class adagrad:
+    def __init__(self,rl = 0.01):
+        self.rl = 0.01
+        self.h = None
+
+    def update(self,parms,grads):
+        if self.h is None:
+            self.h = {}
+            for key,value in parms.items():
+                self.h[key] = np.zeros_like(value)
+
+        for key in parms.key:
+            self.h[key] += parms[key] * parms[key]
+            parms[key] -= self.rl * grads[key] / (np.sqrt(self.h[key] + 1e -7))
+
+
