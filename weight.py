@@ -25,19 +25,20 @@ Batch Normalizationを使うと良い
 重みの際計算をして一定以下に抑える手法　　、Weight decay
 
 """
+import numpy as np
 class Dropout:
     def __init__(self,dropout_rate = 0.5):
         self.dropout_rate = dropout_rate
         self.mask = None
 
-    def forword(self,x,train_frag = true):
+    def forword(self,x,train_frag = True):
         if train_frag:
             self.mask = np.random.rand(*x.sharp) > self.dropout_rate
             return x * self.mask
         else:
             return x * (1.0 - self.dropout_rate)
 
-    def bacword(self,self,dout):
+    def bacword(self,dout):
         return dout * self.mask
 
 
@@ -49,5 +50,10 @@ class Dropout:
 どうやって決めるのか。
 テストデータを用いるのはOUT ー＞　テストデータに対する過学習になってしまう。
 なので、ハイパーパラメータ用にデータを抽出　＝ 検証データ　
+
+最適化の方法
+まず大まかに範囲を決めてその中でランダムに、パラメータ設定
+その後、１００回くらい繰り返し、良さげな範囲を探す
+良さげな範囲に範囲を絞って、またランダムに行うを繰り返す
 
 """
